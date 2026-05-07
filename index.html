@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>American Odyssey — A Historical Journey</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Crimson+Pro:ital,wght@0,400;0,600;1,400;1,600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0705;
+  --bg2: #140e08;
+  --paper: #f2deb0;
+  --paper-aged: #e8cfa0;
+  --paper-dark: #d4b880;
+  --ink: #1e0f05;
+  --ink-light: #3a2010;
+  --gold: #c49a20;
+  --gold-light: #e8c060;
+  --gold-dim: #8a6a10;
+  --crimson: #7a1515;
+  --crimson-light: #b02525;
+  --crimson-pale: #c84545;
+  --blue-deep: #0f1f3a;
+  --blue: #1a3a6b;
+  --green-earth: #2a3a1a;
+  --text-warm: #e8d5b0;
+  --text-dim: #a09070;
+  --stat-bg: rgba(255,255,255,0.07);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text-warm);
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 18px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#app { min-height: 100vh; }
+
+/* ── NOISE OVERLAY ── */
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:9999; opacity:0.4;
+}
+
+/* ══════════ TITLE SCREEN ══════════ */
+.title-screen {
+  min-height:100vh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  position:relative; overflow:hidden;
+  background: radial-gradient(ellipse at 50% 30%, #1c1005 0%, #0a0705 70%);
+}
+
+.stars { position:absolute; inset:0; overflow:hidden; }
+.star {
+  position:absolute; background:#fff; border-radius:50%;
+  animation: twinkle 3s infinite alternate;
+}
+@keyframes twinkle { from{opacity:0.2} to{opacity:0.9} }
+
+.title-eagle {
+  font-size: 4rem; margin-bottom: 12px;
+  animation: float 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(196,154,32,0.5));
+}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+
+.title-ornament {
+  color: var(--gold); font-family:'IM Fell English SC'; font-size:0.85rem;
+  letter-spacing:0.35em; text-transform:uppercase; margin-bottom:16px;
+  opacity:0.75;
+}
+
+h1.game-title {
+  font-family:'IM Fell English SC', serif;
+  font-size: clamp(2.8rem, 8vw, 5.5rem);
+  color: var(--gold-light);
+  text-shadow: 0 0 40px rgba(196,154,32,0.4), 0 2px 0 rgba(0,0,0,0.8);
+  letter-spacing:0.05em;
+  line-height:1.05;
+  text-align:center;
+}
+
+.title-sub {
+  font-family:'Crimson Pro'; font-style:italic; font-size:1.25rem;
+  color: var(--text-dim); margin-top:10px; letter-spacing:0.15em;
+}
+
+.title-divider {
+  width:220px; height:1px; background: linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin: 28px auto;
+}
+
+.title-era-list {
+  display:flex; gap:20px; margin-bottom:40px; flex-wrap:wrap; justify-content:center;
+}
+.era-badge {
+  font-family:'IM Fell English SC'; font-size:0.72rem; letter-spacing:0.2em;
+  color:var(--text-dim); border:1px solid rgba(196,154,32,0.25); padding:5px 14px;
+  border-radius:2px;
+}
+
+.btn-primary {
+  font-family:'IM Fell English SC'; font-size:1.1rem; letter-spacing:0.2em;
+  padding:14px 44px; background:transparent;
+  border:2px solid var(--gold); color:var(--gold-light);
+  cursor:pointer; transition:all 0.3s; position:relative; overflow:hidden;
+}
+.btn-primary::before {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(135deg, rgba(196,154,32,0.15), transparent);
+  transform:translateX(-100%); transition:transform 0.3s;
+}
+.btn-primary:hover::before { transform:translateX(0); }
+.btn-primary:hover { border-color:var(--gold-light); color:#fff; box-shadow:0 0 20px rgba(196,154,32,0.3); }
+.btn-primary:active { transform:scale(0.97); }
+
+.btn-secondary {
+  font-family:'Crimson Pro'; font-size:1.05rem; padding:10px 28px;
+  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.2);
+  color:var(--text-warm); cursor:pointer; transition:all 0.25s; border-radius:2px;
+}
+.btn-secondary:hover { background:rgba(255,255,255,0.12); border-color:rgba(255,255,255,0.4); }
+
+.btn-danger {
+  font-family:'Crimson Pro'; font-size:1.05rem; padding:10px 28px;
+  background:rgba(122,21,21,0.3); border:1px solid rgba(180,40,40,0.5);
+  color:#e88; cursor:pointer; transition:all 0.25s; border-radius:2px;
+}
+.btn-danger:hover { background:rgba(122,21,21,0.5); }
+
+/* ══════════ STATS BAR ══════════ */
+.stats-bar {
+  display:flex; align-items:center; gap:6px; padding:8px 16px;
+  background:linear-gradient(135deg, #140a02, #1e1005);
+  border-bottom:2px solid var(--gold-dim);
+  position:sticky; top:0; z-index:100; flex-wrap:wrap;
+}
+.stat-item {
+  display:flex; align-items:center; gap:6px; flex:1; min-width:90px; max-width:160px;
+}
+.stat-label {
+  font-family:'IM Fell English SC'; font-size:0.65rem; letter-spacing:0.12em;
+  color:var(--text-dim); white-space:nowrap;
+}
+.stat-bar-wrap {
+  flex:1; height:6px; background:rgba(255,255,255,0.08); border-radius:3px; overflow:hidden;
+}
+.stat-bar-fill {
+  height:100%; border-radius:3px; transition:width 0.6s ease;
+}
+.stat-bar-fill.health { background:linear-gradient(90deg,#8b2020,#e84040); }
+.stat-bar-fill.money { background:linear-gradient(90deg,#6a5010,#c9a820); }
+.stat-bar-fill.food { background:linear-gradient(90deg,#2a5020,#50b040); }
+.stat-bar-fill.reputation { background:linear-gradient(90deg,#1a2a6a,#4070d0); }
+.stat-bar-fill.morale { background:linear-gradient(90deg,#402060,#8040c0); }
+.stat-val {
+  font-family:'IM Fell English SC'; font-size:0.75rem; color:var(--gold-dim);
+  min-width:24px; text-align:right;
+}
+
+.year-display {
+  font-family:'IM Fell English SC'; font-size:1rem; color:var(--gold);
+  letter-spacing:0.15em; margin-left:auto; white-space:nowrap;
+  border-left:1px solid rgba(196,154,32,0.3); padding-left:14px;
+}
+
+/* ══════════ CHARACTER CREATION ══════════ */
+.create-screen {
+  min-height:100vh; padding:40px 20px;
+  background: radial-gradient(ellipse at 40% 60%, #150e05 0%, #0a0705 100%);
+}
+.create-inner { max-width:900px; margin:0 auto; }
+
+.section-header {
+  font-family:'IM Fell English SC'; font-size:0.8rem; letter-spacing:0.3em;
+  color:var(--gold-dim); text-transform:uppercase; margin-bottom:8px;
+}
+.section-title {
+  font-family:'IM Fell English', serif; font-size:2.2rem; color:var(--gold-light);
+  margin-bottom:6px;
+}
+.section-divider {
+  height:1px; background:linear-gradient(90deg,var(--gold-dim),transparent);
+  margin-bottom:28px;
+}
+
+.name-input {
+  width:100%; max-width:400px; padding:12px 18px;
+  background:rgba(255,255,255,0.05); border:1px solid rgba(196,154,32,0.4);
+  color:var(--text-warm); font-family:'Crimson Pro'; font-size:1.2rem;
+  outline:none; transition:border-color 0.2s;
+}
+.name-input::placeholder { color:var(--text-dim); }
+.name-input:focus { border-color:var(--gold); }
+
+.classes-grid {
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:14px;
+  margin-bottom:32px;
+}
+.class-card {
+  border:1px solid rgba(196,154,32,0.2); padding:18px;
+  background:rgba(255,255,255,0.03); cursor:pointer; transition:all 0.25s;
+  position:relative; overflow:hidden;
+}
+.class-card::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg, rgba(196,154,32,0.08),transparent);
+  opacity:0; transition:opacity 0.25s;
+}
+.class-card:hover::before { opacity:1; }
+.class-card:hover { border-color:rgba(196,154,32,0.5); transform:translateY(-2px); }
+.class-card.selected {
+  border-color:var(--gold); background:rgba(196,154,32,0.1);
+  box-shadow:0 0 20px rgba(196,154,32,0.2);
+}
+.class-card.selected::before { opacity:1; }
+
+.class-icon { font-size:2rem; margin-bottom:8px; }
+.class-name {
+  font-family:'IM Fell English SC'; font-size:1.05rem; color:var(--gold-light);
+  margin-bottom:6px;
+}
+.class-desc { font-size:0.9rem; color:var(--text-dim); line-height:1.4; margin-bottom:10px; }
+.class-flavor { font-style:italic; font-size:0.85rem; color:rgba(232,208,160,0.5); }
+.class-ability {
+  margin-top:10px; padding:6px 10px;
+  background:rgba(196,154,32,0.08); border-left:2px solid var(--gold-dim);
+  font-size:0.8rem; color:var(--gold-dim);
+}
+
+/* ══════════ CHAPTER TRANSITION ══════════ */
+.chapter-transition {
+  min-height:100vh; display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  position:relative; overflow:hidden;
+}
+.chapter-bg-overlay {
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse at center, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.5) 100%);
+}
+.chapter-number {
+  font-family:'IM Fell English SC'; font-size:0.85rem; letter-spacing:0.4em;
+  color:rgba(255,255,255,0.4); margin-bottom:14px;
+  animation: fadeUp 0.8s ease forwards; opacity:0;
+}
+.chapter-title-big {
+  font-family:'IM Fell English SC'; font-size:clamp(2.5rem,7vw,4.5rem);
+  text-align:center; line-height:1.1; margin-bottom:10px;
+  animation: fadeUp 0.8s 0.2s ease forwards; opacity:0;
+}
+.chapter-years {
+  font-family:'Crimson Pro'; font-style:italic; font-size:1.3rem;
+  margin-bottom:32px; opacity:0;
+  animation: fadeUp 0.8s 0.35s ease forwards;
+}
+.chapter-context {
+  max-width:560px; text-align:center; font-size:1.05rem; line-height:1.7;
+  color:rgba(255,255,255,0.7); margin-bottom:48px;
+  animation: fadeUp 0.8s 0.5s ease forwards; opacity:0;
+}
+@keyframes fadeUp {
+  from{opacity:0; transform:translateY(20px)}
+  to{opacity:1; transform:translateY(0)}
+}
+
+/* ══════════ GAME SCREEN ══════════ */
+.game-screen {
+  min-height:calc(100vh - 52px); display:flex; flex-direction:column;
+  align-items:center; justify-content:center; padding:30px 20px;
+  background:radial-gradient(ellipse at 50% 40%, #160f05 0%, #0a0705 100%);
+}
+
+.event-card {
+  max-width:680px; width:100%;
+  background: var(--paper);
+  color: var(--ink);
+  padding:36px 40px;
+  position:relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.8), inset 0 0 40px rgba(0,0,0,0.08);
+  border:1px solid rgba(0,0,0,0.2);
+}
+.event-card::before {
+  content:'';
+  position:absolute; inset:8px;
+  border:1px solid rgba(0,0,0,0.12);
+  pointer-events:none;
+}
+
+.event-paper-tear {
+  position:absolute; top:0; left:0; right:0; height:8px;
+  background:repeating-linear-gradient(90deg, var(--paper) 0px, var(--paper-aged) 3px, var(--paper) 6px);
+  filter:blur(0.5px);
+}
+
+.event-header {
+  text-align:center; border-bottom:2px solid var(--ink); padding-bottom:14px; margin-bottom:20px;
+}
+.event-newspaper-name {
+  font-family:'IM Fell English SC'; font-size:0.7rem; letter-spacing:0.25em; color:var(--ink-light);
+  margin-bottom:6px;
+}
+.event-year-loc {
+  display:flex; justify-content:space-between; font-size:0.8rem; color:var(--ink-light);
+  font-family:'Crimson Pro'; border-top:1px solid var(--ink); border-bottom:1px solid var(--ink);
+  padding:3px 0; margin-bottom:12px;
+}
+.event-headline {
+  font-family:'IM Fell English SC'; font-size:1.5rem; color:var(--ink); line-height:1.2;
+}
+
+.event-description {
+  font-family:'Crimson Pro'; font-size:1.05rem; line-height:1.75;
+  color:var(--ink-light); margin-bottom:24px;
+}
+
+.choices-list { display:flex; flex-direction:column; gap:10px; }
+.choice-btn {
+  width:100%; padding:12px 18px; text-align:left;
+  background:rgba(0,0,0,0.04); border:1px solid rgba(0,0,0,0.18);
+  color:var(--ink); font-family:'Crimson Pro'; font-size:1rem;
+  cursor:pointer; transition:all 0.2s; line-height:1.4;
+  border-radius:1px;
+}
+.choice-btn:hover {
+  background:rgba(0,0,0,0.1); border-color:rgba(0,0,0,0.35);
+  transform:translateX(4px);
+}
+.choice-btn span.choice-num {
+  font-family:'IM Fell English SC'; color:var(--crimson); margin-right:10px; font-size:0.9rem;
+}
+
+/* OUTCOME card */
+.outcome-card {
+  max-width:680px; width:100%; background:var(--paper); color:var(--ink);
+  padding:36px 40px; text-align:center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+}
+.outcome-result {
+  font-family:'IM Fell English', serif; font-style:italic; font-size:1.2rem;
+  line-height:1.7; margin-bottom:24px; color:var(--ink-light);
+}
+.outcome-effects {
+  display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-bottom:24px;
+}
+.effect-chip {
+  padding:4px 14px; border-radius:20px; font-size:0.85rem; font-family:'Crimson Pro';
+  font-weight:600; letter-spacing:0.05em;
+}
+.effect-pos { background:rgba(30,100,30,0.15); color:#2a7a2a; border:1px solid rgba(30,100,30,0.3); }
+.effect-neg { background:rgba(150,20,20,0.12); color:#922; border:1px solid rgba(150,20,20,0.3); }
+.effect-neu { background:rgba(0,0,0,0.06); color:#666; border:1px solid rgba(0,0,0,0.15); }
+
+/* ══════════ TRAIL SCREEN ══════════ */
+.trail-screen {
+  min-height:calc(100vh - 52px); display:flex; flex-direction:column;
+  align-items:center; padding:30px 20px;
+  background: radial-gradient(ellipse at 50% 20%, #2a1e08 0%, #0a0705 80%);
+}
+
+.trail-header {
+  font-family:'IM Fell English SC'; font-size:1.5rem; color:var(--gold-light);
+  margin-bottom:4px;
+}
+.trail-subheader { font-style:italic; color:var(--text-dim); margin-bottom:24px; }
+
+.trail-map {
+  width:100%; max-width:720px; position:relative; margin-bottom:20px;
+}
+
+.trail-svg { width:100%; }
+
+.trail-info-bar {
+  display:flex; gap:16px; flex-wrap:wrap; justify-content:center;
+  margin-bottom:20px;
+}
+.trail-info-item {
+  background:rgba(255,255,255,0.05); border:1px solid rgba(196,154,32,0.2);
+  padding:8px 18px; font-family:'Crimson Pro'; font-size:0.95rem;
+}
+.trail-info-label { font-size:0.7rem; color:var(--text-dim); font-family:'IM Fell English SC'; letter-spacing:0.15em; }
+.trail-info-val { color:var(--gold-light); font-weight:600; }
+
+.traveling-msg {
+  text-align:center; font-family:'Crimson Pro'; font-style:italic;
+  font-size:1.1rem; color:var(--text-dim); margin:20px 0;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
+
+/* ══════════ LOADING ══════════ */
+.loading-overlay {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:16px; min-height:300px;
+}
+.loading-quill {
+  font-size:2.5rem; animation: write 1s ease-in-out infinite alternate;
+}
+@keyframes write { from{transform:rotate(-15deg) translateY(0)} to{transform:rotate(5deg) translateY(-8px)} }
+.loading-text {
+  font-family:'IM Fell English', serif; font-style:italic; color:var(--text-dim);
+}
+
+/* ══════════ GAME OVER / VICTORY ══════════ */
+.end-screen {
+  min-height:100vh; display:flex; flex-direction:column; align-items:center;
+  justify-content:center; padding:40px 20px; text-align:center;
+}
+.end-icon { font-size:5rem; margin-bottom:20px; }
+.end-title {
+  font-family:'IM Fell English SC'; font-size:clamp(2rem,6vw,3.5rem);
+  margin-bottom:12px;
+}
+.end-subtitle {
+  font-family:'Crimson Pro'; font-style:italic; font-size:1.2rem;
+  color:var(--text-dim); margin-bottom:32px;
+}
+.end-stats-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:12px;
+  max-width:500px; margin:0 auto 32px;
+}
+.end-stat-box {
+  background:rgba(255,255,255,0.05); border:1px solid rgba(196,154,32,0.2);
+  padding:14px;
+}
+.end-stat-name {
+  font-family:'IM Fell English SC'; font-size:0.7rem; letter-spacing:0.15em;
+  color:var(--text-dim); margin-bottom:4px;
+}
+.end-stat-value { font-size:1.5rem; color:var(--gold-light); font-weight:600; }
+
+.end-epitaph {
+  max-width:500px; font-style:italic; line-height:1.7;
+  color:var(--text-dim); margin-bottom:32px;
+}
+
+/* ══════════ HELPERS ══════════ */
+.gap-12 { gap:12px; }
+.mt-20 { margin-top:20px; }
+.typewriter { overflow:hidden; white-space:pre-wrap; }
+.flex-row { display:flex; flex-direction:row; }
+.flex-col { display:flex; flex-direction:column; }
+.center { align-items:center; justify-content:center; }
+
+.history-scroll {
+  max-height:200px; overflow-y:auto;
+  background:rgba(0,0,0,0.3); border:1px solid rgba(196,154,32,0.15);
+  padding:12px 16px; margin-bottom:20px;
+  font-size:0.85rem; color:var(--text-dim);
+}
+.history-entry { margin-bottom:6px; }
+.history-entry::before { content:'• '; color:var(--gold-dim); }
+
+.low-resource { animation:shake 0.5s ease; }
+@keyframes shake {
+  0%,100%{transform:translateX(0)}
+  25%{transform:translateX(-4px)}
+  75%{transform:translateX(4px)}
+}
+
+.fade-in { animation: fadeIn 0.5s ease forwards; }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+/* Chapter specific colors */
+.ch-colonial { background: radial-gradient(ellipse at 50% 40%, #2a1005 0%, #0a0705 100%); }
+.ch-revolution { background: radial-gradient(ellipse at 50% 40%, #050f20 0%, #0a0705 100%); }
+.ch-westward { background: radial-gradient(ellipse at 50% 40%, #1a1505 0%, #0a0705 100%); }
+.ch-division { background: radial-gradient(ellipse at 50% 40%, #100508 0%, #0a0705 100%); }
+.ch-civilwar { background: radial-gradient(ellipse at 50% 40%, #150505 0%, #0a0705 100%); }
+
+.ch-color-colonial { color:#e89050; }
+.ch-color-revolution { color:#5070d0; }
+.ch-color-westward { color:#90b050; }
+.ch-color-division { color:#d05050; }
+.ch-color-civilwar { color:#c84040; }
+
+.intro-mb { margin-bottom: 20px; }
+.name-mb { margin-bottom: 16px; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  CONSTANTS & DATA
+// ═══════════════════════════════════════════════
+
+const CHAPTERS = [
+  {
+    id:1, name:"Colonial Tensions", subtitle:"1765 – 1775",
+    theme:"colonial", bgClass:"ch-colonial", colorClass:"ch-color-colonial",
+    chapterColor:"#e89050",
+    context:"Britain's tax collectors are everywhere. The Stamp Act, the Townshend Acts, soldiers quartered in homes — resentment is boiling over in the colonies. Every American must decide where they stand.",
+    startYear:1765, endYear:1775, eventsNeeded:4,
+    keyEvents:["The Stamp Act taxes every printed document", "British soldiers patrol Boston's streets", "The Sons of Liberty meet in secret"],
+  },
+  {
+    id:2, name:"The Revolution", subtitle:"1776 – 1783",
+    theme:"revolution", bgClass:"ch-revolution", colorClass:"ch-color-revolution",
+    chapterColor:"#5070d0",
+    context:"The Continental Congress has declared independence. The world watches as ragged colonists defy the greatest military power on earth. Will you fight, flee, or find another way?",
+    startYear:1776, endYear:1783, eventsNeeded:4,
+    keyEvents:["Washington crosses the Delaware in winter","Valley Forge claims many lives","British and French fleets clash at sea"],
+  },
+  {
+    id:3, name:"Westward Expansion", subtitle:"1803 – 1850",
+    theme:"westward", bgClass:"ch-westward", colorClass:"ch-color-westward",
+    chapterColor:"#90b050",
+    context:"The Louisiana Purchase opened half a continent. Manifest Destiny calls Americans westward — across prairie, mountain, and desert — toward California gold and Oregon farmland. The trail is long and unforgiving.",
+    startYear:1820, endYear:1850, eventsNeeded:5, isTrail:true,
+    keyEvents:["The Oregon Trail stretches 2,000 miles","Cholera and dysentery stalk wagon trains","Gold discovered at Sutter's Mill, 1848"],
+  },
+  {
+    id:4, name:"A Nation Divided", subtitle:"1820 – 1860",
+    theme:"division", bgClass:"ch-division", colorClass:"ch-color-division",
+    chapterColor:"#d05050",
+    context:"The slavery question has torn America apart. Abolitionists, slave owners, politicians, and freedom-seekers each pull the nation toward rupture. The Underground Railroad runs in secret. Congress compromises and fails.",
+    startYear:1850, endYear:1860, eventsNeeded:4,
+    keyEvents:["The Fugitive Slave Act passes","Harriet Tubman leads the Underground Railroad","John Brown's raid at Harper's Ferry"],
+  },
+  {
+    id:5, name:"The Civil War", subtitle:"1861 – 1865",
+    theme:"civilwar", bgClass:"ch-civilwar", colorClass:"ch-color-civilwar",
+    chapterColor:"#c84040",
+    context:"Brother against brother. The nation tears itself apart at Antietam, Gettysburg, and Vicksburg. Whether you don your uniform, tend to the wounded, or simply try to survive — no one escapes the war untouched.",
+    startYear:1861, endYear:1865, eventsNeeded:5,
+    keyEvents:["Fort Sumter falls — the war begins","Lincoln issues the Emancipation Proclamation","Lee surrenders at Appomattox Court House"],
+  }
+];
+
+const CHARACTER_CLASSES = [
+  {
+    id:'colonist', name:'Colonial Settler', icon:'🏡',
+    desc:'Born in the colonies, you know these lands as home. The fields, the forests — they are yours.',
+    flavor:'You work a modest plot of land outside Boston, watching the British with wary eyes.',
+    stats:{health:75,money:55,food:75,reputation:50,morale:70},
+    ability:'Land Knowledge: +15 Food on rural events'
+  },
+  {
+    id:'merchant', name:'Merchant', icon:'⚖️',
+    desc:'Trade is your lifeblood. You know the value of everything and the cost of principle.',
+    flavor:'Your trading post hums with commerce — but British tariffs bite deeper each year.',
+    stats:{health:65,money:90,food:55,reputation:60,morale:60},
+    ability:'Trade Networks: +20 Money on economic events'
+  },
+  {
+    id:'immigrant', name:'Irish Immigrant', icon:'⚓',
+    desc:'You crossed a treacherous ocean seeking something better. Hardship is an old friend.',
+    flavor:'Fresh off the boat from County Cork, you carry hope and not much else.',
+    stats:{health:85,money:25,food:50,reputation:30,morale:80},
+    ability:'Resilience: Morale penalties reduced by 10'
+  },
+  {
+    id:'enslaved', name:'Enslaved Person', icon:'⛓️',
+    desc:'Stolen from your homeland, you survive through cunning, community, and the unbreakable dream of freedom.',
+    flavor:'On a Virginia tobacco plantation, every day is a calculation of survival and resistance.',
+    stats:{health:60,money:0,food:45,reputation:5,morale:55},
+    ability:'Underground Network: Unlocks hidden choices',
+    special:true
+  },
+  {
+    id:'farmer', name:'Frontier Farmer', icon:'🌾',
+    desc:'The frontier is your classroom. You live off the land and trust your rifle more than any government.',
+    flavor:'Your family homestead sits at the edge of the known world, as far as you like it.',
+    stats:{health:90,money:35,food:85,reputation:40,morale:65},
+    ability:'Self-Sufficient: Food never falls below 15 from events'
+  },
+  {
+    id:'soldier', name:'Militia Soldier', icon:'⚔️',
+    desc:'Honor and duty are your compass. You have drilled, marched, and waited. Now comes the test.',
+    flavor:'You drill with the local militia each week, your musket cleaned and ready.',
+    stats:{health:95,money:30,food:55,reputation:65,morale:85},
+    ability:'Combat Ready: +20 Health in battle events'
+  },
+  {
+    id:'journalist', name:'Pamphleteer', icon:'📜',
+    desc:'Your pen shapes public opinion. Words are your weapon, and the printing press your cannon.',
+    flavor:'You print pamphlets in Philadelphia, each one fanning the flames of liberty or controversy.',
+    stats:{health:60,money:50,food:50,reputation:80,morale:70},
+    ability:'Propaganda: +25 Reputation on political events'
+  }
+];
+
+const TRAIL_STOPS = [
+  { name:"Independence, Missouri", mile:0, desc:"The journey begins." },
+  { name:"Kansas Prairies", mile:200, desc:"Endless grass under endless sky." },
+  { name:"Fort Kearny, Nebraska", mile:350, desc:"A welcome stockade on the plains." },
+  { name:"Chimney Rock", mile:520, desc:"The famous landmark juts skyward." },
+  { name:"Fort Laramie", mile:650, desc:"Trade, rest, and resupply." },
+  { name:"South Pass", mile:800, desc:"The Continental Divide — halfway!" },
+  { name:"Fort Bridger", mile:920, desc:"Jim Bridger's trading post offers supplies." },
+  { name:"Snake River Plain", mile:1050, desc:"Treacherous river crossings ahead." },
+  { name:"The Dalles", mile:1170, desc:"The end of the overland trail." },
+  { name:"Oregon City", mile:1320, desc:"Journey's end — a new life awaits." }
+];
+
+const FALLBACK_EVENTS = {
+  colonial: [
+    {
+      year:1768, headline:"STAMP ACT COLLECTORS DEMAND PAYMENT",
+      location:"Boston, Massachusetts",
+      description:"A British tax collector blocks your path, demanding payment for a stamped document you need for your business. Sons of Liberty members watch from the tavern across the street, expecting to see what you'll do.",
+      choices:[
+        {text:"Pay the tax and move on quietly",outcome:"You pay the fee. The collector nods curtly. The Sons of Liberty turn away in disappointment.",effects:{health:0,money:-20,food:0,reputation:-15,morale:-10}},
+        {text:"Refuse and join the growing crowd of protesters",outcome:"You toss the coins aside. The crowd cheers. A pamphlet finds your hand. Something has changed in you.",effects:{health:-5,money:0,food:0,reputation:20,morale:15}},
+        {text:"Barter goods instead of currency",outcome:"You negotiate cleverly, trading some goods. The collector, confused, accepts. You've bent the rules without breaking them.",effects:{health:0,money:-5,food:-15,reputation:5,morale:5}},
+        {text:"Slip away through the alley",outcome:"You duck through a side street. The collector shouts after you, but you're already gone. It's cowardly — but effective.",effects:{health:0,money:0,food:0,reputation:-10,morale:-5}}
+      ]
+    },
+    {
+      year:1770, headline:"SOLDIERS AND COLONISTS CLASH IN THE STREETS",
+      location:"Boston, Massachusetts",
+      description:"Shots ring out on King Street. You arrive to find five colonists dead in the snow, British Redcoats standing over them, muskets still smoking. The crowd grows. Someone is screaming for vengeance.",
+      choices:[
+        {text:"Help carry the wounded to safety",outcome:"You drag an injured man clear of the mayhem. He grips your arm with gratitude. You've made a friend — and witnessed history.",effects:{health:-10,money:0,food:0,reputation:20,morale:5}},
+        {text:"Shout for calm and de-escalation",outcome:"Your voice cuts through the chaos. A few hot heads pause. The soldiers retreat slightly. Not everyone appreciates your moderation.",effects:{health:0,money:0,food:0,reputation:5,morale:-5}},
+        {text:"Flee before you're arrested",outcome:"You run. Later you learn several bystanders were arrested. Your cowardice stings, but you are free and unhurt.",effects:{health:0,money:0,food:0,reputation:-20,morale:-15}},
+        {text:"Record everything you witness",outcome:"You commit every detail to memory and paper. Your account of the massacre spreads through the colonies. People want to know your name.",effects:{health:0,money:10,food:0,reputation:25,morale:10}}
+      ]
+    }
+  ],
+  revolution: [
+    {
+      year:1777, headline:"WASHINGTON CALLS FOR VOLUNTEERS AT VALLEY FORGE",
+      location:"Valley Forge, Pennsylvania",
+      description:"It is winter and the Continental Army is starving. General Washington's aide approaches you near the frozen encampment, asking for any help you can give — food, service, or a musket arm.",
+      choices:[
+        {text:"Enlist and take up arms with Washington",outcome:"You join the ragged lines of men who refuse to quit. Your feet bleed in the snow. But you believe in something now.",effects:{health:-20,money:0,food:-20,reputation:25,morale:15}},
+        {text:"Donate your food stores to the army",outcome:"The soldiers fall on your provisions with desperate hunger. You go without, but you've kept men alive who will win this war.",effects:{health:-10,money:0,food:-30,reputation:20,morale:10}},
+        {text:"Offer medical assistance in the field hospital",outcome:"You tend to frostbitten men and amputations. It is harrowing. You learn more about the cost of war than any pamphlet ever taught.",effects:{health:-5,money:0,food:0,reputation:20,morale:-10}},
+        {text:"Stay neutral and protect your own family",outcome:"You return home, telling yourself it's the sensible thing. The soldiers march past your window and don't look at you.",effects:{health:0,money:10,food:10,reputation:-20,morale:-15}}
+      ]
+    }
+  ],
+  westward: [
+    {
+      year:1843, headline:"RIVER CROSSING THREATENS TO CLAIM THE WAGON",
+      location:"North Platte River, Nebraska",
+      description:"The river is swollen with spring melt, running fast and brown. Three wagons ahead of you have crossed safely, but the fourth tipped and lost a chest of supplies. Your family watches you decide.",
+      choices:[
+        {text:"Attempt the crossing now while it's daylight",outcome:"You urge the oxen forward. The wagon lurches and tilts — but you make it through, soaking wet and shaking.",effects:{health:-10,money:0,food:-10,reputation:10,morale:5}},
+        {text:"Wait two days for the water to recede",outcome:"You camp by the river. Two days cost you supplies, but the crossing is easier. Other impatient travelers nod respect at your patience.",effects:{health:0,money:0,food:-20,reputation:5,morale:0}},
+        {text:"Hire a ferryman to carry supplies separately",outcome:"The ferryman charges dearly, but your goods arrive dry. Worth every coin — this time.",effects:{health:0,money:-25,food:0,reputation:5,morale:10}},
+        {text:"Lighten the load — abandon heavy goods to cross",outcome:"You leave a trunk of belongings by the river. The crossing goes smoothly. You try not to think about what you left behind.",effects:{health:0,money:-20,food:0,reputation:0,morale:-10}}
+      ]
+    }
+  ],
+  division: [
+    {
+      year:1852, headline:"RUNAWAY SLAVE SEEKS SHELTER AT YOUR DOOR",
+      location:"Ohio",
+      description:"In the dead of night, a frantic knock at your door reveals a young man — clearly exhausted, clearly running. He whispers one word: 'Please.' Down the road, you can hear dogs baying. The Fugitive Slave Act makes harboring him a crime.",
+      choices:[
+        {text:"Hide him in your cellar and send for the next station",outcome:"You put everything at risk. In the morning he is gone north, and you breathe again. You have become part of something larger than yourself.",effects:{health:0,money:-10,food:-10,reputation:15,morale:25}},
+        {text:"Give him food and point him north — then close your door",outcome:"You compromise. He has a chance. You bear the guilt of not doing more, but you have not broken the law.",effects:{health:0,money:-5,food:-15,reputation:5,morale:-5}},
+        {text:"Turn him away — you cannot risk your family",outcome:"You close the door. The sound of the dogs grows closer. You tell yourself there was no choice. You don't sleep that night, or the next.",effects:{health:0,money:0,food:0,reputation:-20,morale:-25}},
+        {text:"Alert the authorities — the law must be followed",outcome:"You comply with the Fugitive Slave Act. Neighbors stop speaking to you. Money changes hands. You tell yourself you did right.",effects:{health:0,money:15,food:0,reputation:-30,morale:-30}}
+      ]
+    }
+  ],
+  civilwar: [
+    {
+      year:1863, headline:"THE BATTLE RAGES — EVERY HAND NEEDED",
+      location:"Gettysburg, Pennsylvania",
+      description:"Three days of cannon fire have left the fields red. You are pressed into service on the second day, and now a sergeant shoves a musket into your hands. 'The line won't hold without you.' Around you, men are dying.",
+      choices:[
+        {text:"Hold the line — stand and fire",outcome:"You fire until your hands shake. The line holds. Three men beside you are not so fortunate. You survive, changed.",effects:{health:-25,money:0,food:0,reputation:25,morale:-10}},
+        {text:"Drag the wounded to the field hospital",outcome:"You pull men from the carnage all afternoon. You save four lives. Your back is broken with exhaustion, but you are whole.",effects:{health:-10,money:0,food:0,reputation:20,morale:5}},
+        {text:"Break and run — survival above all",outcome:"You run. Later you are listed as absent without leave. You are alive. The shame follows you.",effects:{health:5,money:0,food:0,reputation:-30,morale:-20}},
+        {text:"Surrender to Confederate forces to end your part",outcome:"You lay down arms. Confederate soldiers take you prisoner. Camp Douglas, a Union prisoner camp, awaits — ironically on the other side.",effects:{health:-20,money:-20,food:-20,reputation:-10,morale:-15}}
+      ]
+    }
+  ]
+};
+
+const TRAIL_FALLBACK_EVENTS = [
+  {
+    headline:"OXEN TAKE ILL ON THE PRAIRIE",
+    description:"Two of your oxen have fallen sick overnight. Without them, the wagon cannot move. The herd grazes weakly as you assess the situation.",
+    choices:[
+      {text:"Rest here and nurse them back to health",outcome:"After three days' rest and careful feeding, the oxen recover. You've lost time but kept your animals.",effects:{health:0,money:0,food:-25,reputation:0,morale:-5}},
+      {text:"Trade for replacement oxen from another wagon",outcome:"A family ahead has a spare. They drive a hard bargain, but you're moving again.",effects:{health:0,money:-30,food:-10,reputation:0,morale:5}},
+      {text:"Butcher the sick animals for food and press on",outcome:"You slaughter them and salt the meat. The rest of the herd strains under the heavier burden, but you have food for weeks.",effects:{health:0,money:0,food:40,reputation:0,morale:-10}}
+    ]
+  },
+  {
+    headline:"CHOLERA SPREADS THROUGH THE CAMP",
+    description:"Three children in the wagon ahead died last night. Now a member of your own party wakes with the telltale cramps and sweating. Cholera. The scourge of the trail.",
+    choices:[
+      {text:"Quarantine the sick and push forward anyway",outcome:"It's brutal, but you limit the spread. Two more fall ill but recover. You reach Fort Laramie one week behind schedule.",effects:{health:-20,money:0,food:-15,reputation:0,morale:-15}},
+      {text:"Stop and care for everyone until recovered",outcome:"You lose two weeks. Your supplies drop dangerously. But everyone in your party survives — a miracle on this trail.",effects:{health:5,money:0,food:-30,reputation:10,morale:5}},
+      {text:"Abandon the sick and push on alone",outcome:"You survive. For the rest of your life you hear the names of those you left behind.",effects:{health:0,money:0,food:-5,reputation:-25,morale:-30}}
+    ]
+  },
+  {
+    headline:"SIOUX RIDERS APPROACH THE TRAIN",
+    description:"A band of Sioux warriors rides alongside your wagon train, watching. Their leader signals a desire to trade. Some travelers raise their rifles nervously.",
+    choices:[
+      {text:"Greet them peacefully and negotiate a trade",outcome:"You exchange cloth and metal tools for fresh buffalo meat and knowledge of a better water source ahead. A good day.",effects:{health:0,money:-10,food:25,reputation:10,morale:15}},
+      {text:"Show weapons but hold fire — a tense standoff",outcome:"Neither side shoots. The riders turn and go. Everyone breathes. The tension drains slowly from your shoulders.",effects:{health:0,money:0,food:0,reputation:0,morale:-5}},
+      {text:"Fire a warning shot",outcome:"The shot rings out. The riders scatter, then regroup on the ridge. For the next three days, you sleep in your clothes.",effects:{health:-5,money:0,food:0,reputation:-10,morale:-15}}
+    ]
+  },
+  {
+    headline:"MOUNTAIN PASS BLOCKED BY EARLY SNOW",
+    description:"October has come early. A foot of snow covers South Pass and the temperature drops fast. The Donner Party made headlines last year. Everyone remembers what happened.",
+    choices:[
+      {text:"Push through the pass immediately",outcome:"You drive the oxen hard through sleet and wind. Two trunks fall off the wagon but you make it through before the storm closes the pass.",effects:{health:-15,money:-10,food:-15,reputation:0,morale:-10}},
+      {text:"Winter here and attempt the pass in spring",outcome:"You build a rough shelter and hunker down. It's five miserable months, but everyone survives the winter.",effects:{health:5,money:-15,food:-40,reputation:0,morale:-15}},
+      {text:"Turn south toward California instead",outcome:"You alter course for California. The gold fields shimmer in your dreams. The southern route is longer but free of snow.",effects:{health:0,money:0,food:-20,reputation:0,morale:5}}
+    ]
+  },
+  {
+    headline:"ABANDONED WAGON HOLDS MYSTERIOUS SUPPLIES",
+    description:"A wagon sits alone on the trail, its canvas torn, no sign of its owners. Inside you find tools, preserved food, and a locked box. Someone needed to leave in a hurry.",
+    choices:[
+      {text:"Take what you need and move on",outcome:"You fill your larder. It's either scavenging or salvage — you tell yourself there's a difference.",effects:{health:0,money:10,food:30,reputation:-5,morale:0}},
+      {text:"Leave it and mark the location for authorities",outcome:"You leave a note and ride on with your conscience clear and your belly still grumbling.",effects:{health:0,money:0,food:0,reputation:15,morale:10}},
+      {text:"Camp here and wait to see who returns",outcome:"No one comes. On the third morning you take what you need and bury the rest. The trail has its own rules.",effects:{health:0,money:5,food:20,reputation:0,morale:0}}
+    ]
+  }
+];
+
+// ═══════════════════════════════════════════════
+//  GAME STATE
+// ═══════════════════════════════════════════════
+
+let state = {
+  screen:'title',
+  character:{ name:'', classId:'', className:'', icon:'', ability:'' },
+  stats:{ health:80, money:50, food:60, reputation:50, morale:70 },
+  year:1765,
+  chapterIndex:0,
+  eventsInChapter:0,
+  trailProgress:0,  // 0-9 (trail stops)
+  trailEventIndex:0,
+  history:[],
+  currentEvent:null,
+  pendingEvent:null,
+  showOutcome:false,
+  lastOutcome:null,
+  lastEffects:null,
+  loading:false,
+  loadingMsg:'Consulting the historical record...',
+  alive:true,
+  victory:false,
+};
+
+// ═══════════════════════════════════════════════
+//  RENDERING UTILITIES
+// ═══════════════════════════════════════════════
+
+function $(id){ return document.getElementById(id); }
+function app(html){ document.getElementById('app').innerHTML = html; }
+
+function statsBarHTML(){
+  const s = state.stats;
+  const clamp = v => Math.max(0,Math.min(100,v));
+  return `<div class="stats-bar">
+    ${statItem('health','Health',s.health,'health')}
+    ${statItem('money','Wealth',s.money,'money')}
+    ${statItem('food','Food',s.food,'food')}
+    ${statItem('reputation','Reputation',s.reputation,'reputation')}
+    ${statItem('morale','Morale',s.morale,'morale')}
+    <div class="year-display">${state.year}</div>
+  </div>`;
+}
+
+function statItem(key,label,val,cls){
+  const pct = Math.max(0,Math.min(100,val));
+  const color = pct<25 ? '#e84040' : pct<50 ? '#e8a040' : '';
+  return `<div class="stat-item">
+    <div class="stat-label">${label}</div>
+    <div class="stat-bar-wrap">
+      <div class="stat-bar-fill ${cls}" style="width:${pct}%;${color?'background:'+color:''}"></div>
+    </div>
+    <div class="stat-val" style="${pct<25?'color:#e84040':''}">${Math.round(pct)}</div>
+  </div>`;
+}
+
+function effectChipHTML(key, val){
+  if(val===0) return '';
+  const labels={health:'Health',money:'Wealth',food:'Food',reputation:'Reputation',morale:'Morale'};
+  const sign = val>0 ? '+' : '';
+  const cls = val>0 ? 'effect-pos' : 'effect-neg';
+  return `<span class="effect-chip ${cls}">${labels[key]||key} ${sign}${val}</span>`;
+}
+
+function generateStars(n){
+  let html='';
+  for(let i=0;i<n;i++){
+    const x=Math.random()*100, y=Math.random()*100;
+    const size=Math.random()*2+1;
+    const delay=Math.random()*3;
+    html+=`<div class="star" style="left:${x}%;top:${y}%;width:${size}px;height:${size}px;animation-delay:${delay}s"></div>`;
+  }
+  return html;
+}
+
+// ═══════════════════════════════════════════════
+//  SCREENS
+// ═══════════════════════════════════════════════
+
+function renderTitle(){
+  app(`<div class="title-screen">
+    <div class="stars">${generateStars(80)}</div>
+    <div style="position:relative;z-index:2;text-align:center;padding:20px">
+      <div class="title-eagle">🦅</div>
+      <div class="title-ornament">— An American Historical Odyssey —</div>
+      <h1 class="game-title">American<br>Odyssey</h1>
+      <div class="title-sub">From Colonial Shadows to Civil War Dawn</div>
+      <div class="title-divider"></div>
+      <div class="title-era-list">
+        <span class="era-badge">Colonial 1765</span>
+        <span class="era-badge">Revolution 1776</span>
+        <span class="era-badge">Westward 1820</span>
+        <span class="era-badge">Division 1850</span>
+        <span class="era-badge">Civil War 1861</span>
+      </div>
+      <button class="btn-primary" onclick="startCreate()">Begin Your Journey</button>
+      <div style="margin-top:14px;font-size:0.85rem;color:var(--text-dim);font-style:italic">
+        AI-powered historical events · Your choices shape history
+      </div>
+    </div>
+  </div>`);
+}
+
+function renderCreate(){
+  const classCards = CHARACTER_CLASSES.map(c => {
+    const sel = state.character.classId === c.id ? 'selected' : '';
+    return `<div class="class-card ${sel}" onclick="selectClass('${c.id}')">
+      <div class="class-icon">${c.icon}</div>
+      <div class="class-name">${c.name}</div>
+      <div class="class-desc">${c.desc}</div>
+      <div class="class-flavor">"${c.flavor}"</div>
+      <div class="class-ability">⚡ ${c.ability}</div>
+    </div>`;
+  }).join('');
+
+  app(`<div class="create-screen">
+    <div class="create-inner fade-in">
+      <div class="intro-mb">
+        <div class="section-header">Character Creation</div>
+        <div class="section-title">Who Are You?</div>
+        <div class="section-divider"></div>
+      </div>
+      <div class="name-mb">
+        <div class="section-header" style="margin-bottom:8px">Your Name</div>
+        <input class="name-input" id="nameInput" type="text" maxlength="40"
+          placeholder="Enter your name..." value="${state.character.name}"
+          oninput="state.character.name=this.value"/>
+      </div>
+      <div class="section-header" style="margin-bottom:12px">Your Calling</div>
+      <div class="classes-grid">${classCards}</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <button class="btn-primary" onclick="startGame()">Begin the Journey →</button>
+        <button class="btn-secondary" onclick="renderTitle()">← Back</button>
+      </div>
+    </div>
+  </div>`);
+}
+
+function renderChapterTransition(){
+  const ch = CHAPTERS[state.chapterIndex];
+  const keyEventsHTML = ch.keyEvents.map(e=>`<div style="margin-bottom:6px;color:rgba(255,255,255,0.55)">✦ ${e}</div>`).join('');
+
+  app(`<div class="chapter-transition ${ch.bgClass}" style="background-color:${ch.bgClass}">
+    <div class="chapter-bg-overlay"></div>
+    <div style="position:relative;z-index:2;text-align:center;padding:30px 20px;max-width:700px">
+      <div class="chapter-number">Chapter ${state.chapterIndex+1} of 5</div>
+      <div class="chapter-title-big ${ch.colorClass}">${ch.name}</div>
+      <div class="chapter-years" style="color:rgba(255,255,255,0.6)">${ch.subtitle}</div>
+      <div class="chapter-context">${ch.context}</div>
+      <div style="margin-bottom:32px;font-size:0.9rem;line-height:1.8">${keyEventsHTML}</div>
+      <button class="btn-primary" onclick="beginChapter()" style="border-color:${ch.chapterColor};color:${ch.chapterColor}">
+        Enter the Era →
+      </button>
+    </div>
+  </div>`);
+}
+
+function renderGame(){
+  if(state.loading){
+    app(`${statsBarHTML()}
+    <div class="game-screen">
+      <div class="loading-overlay">
+        <div class="loading-quill">✒️</div>
+        <div class="loading-text">${state.loadingMsg}</div>
+      </div>
+    </div>`);
+    return;
+  }
+
+  if(state.showOutcome && state.lastOutcome){
+    renderOutcome();
+    return;
+  }
+
+  if(!state.currentEvent){ return; }
+
+  const ev = state.currentEvent;
+  const ch = CHAPTERS[state.chapterIndex];
+  const choicesHTML = ev.choices.map((c,i)=>`
+    <button class="choice-btn" onclick="makeChoice(${i})">
+      <span class="choice-num">${['I','II','III','IV'][i]}.</span>${c.text}
+    </button>`).join('');
+
+  const historyItems = state.history.slice(-4).map(h=>`<div class="history-entry">${h}</div>`).join('');
+  const historySection = state.history.length ? `
+    <div style="margin-top:10px;max-width:680px;width:100%">
+      <div style="font-family:'IM Fell English SC';font-size:0.65rem;letter-spacing:0.2em;color:var(--text-dim);margin-bottom:6px">RECENT HISTORY</div>
+      <div class="history-scroll">${historyItems}</div>
+    </div>` : '';
+
+  app(`${statsBarHTML()}
+    <div class="game-screen ${ch.bgClass}">
+      <div class="event-card fade-in">
+        <div class="event-paper-tear"></div>
+        <div class="event-header">
+          <div class="event-newspaper-name">The American Chronicle · Est. 1765</div>
+          <div class="event-year-loc">
+            <span>${ev.year || state.year}</span>
+            <span>${ev.location || 'American Colonies'}</span>
+          </div>
+          <div class="event-headline">${ev.headline}</div>
+        </div>
+        <div class="event-description">${ev.description}</div>
+        <div class="choices-list">${choicesHTML}</div>
+      </div>
+      ${historySection}
+    </div>`);
+}
+
+function renderOutcome(){
+  const ev = state.currentEvent;
+  const out = state.lastOutcome;
+  const effects = state.lastEffects || {};
+  const ch = CHAPTERS[state.chapterIndex];
+
+  const effectsHTML = Object.entries(effects)
+    .map(([k,v]) => effectChipHTML(k,v)).join('');
+
+  const isLastEvent = state.eventsInChapter >= ch.eventsNeeded;
+  const isLastChapter = state.chapterIndex === CHAPTERS.length - 1;
+  const nextLabel = isLastChapter && isLastEvent ? 'See Your Fate →' :
+                    isLastEvent ? 'Next Chapter →' : 'Continue →';
+
+  app(`${statsBarHTML()}
+    <div class="game-screen ${ch.bgClass}">
+      <div class="outcome-card fade-in">
+        <div style="font-family:'IM Fell English SC';font-size:0.75rem;letter-spacing:0.25em;color:#999;margin-bottom:16px">
+          ${ev.year || state.year} · ${ev.location || ''}
+        </div>
+        <div style="font-size:2rem;margin-bottom:14px">📜</div>
+        <div class="outcome-result">${out}</div>
+        <div class="outcome-effects">${effectsHTML}</div>
+        <button class="btn-primary" onclick="continueAfterOutcome()" style="border-color:${ch.chapterColor};color:${ch.chapterColor}">
+          ${nextLabel}
+        </button>
+      </div>
+    </div>`);
+}
+
+function renderTrail(){
+  if(state.loading){
+    app(`${statsBarHTML()}
+    <div class="trail-screen">
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px">
+        <div style="font-size:3rem">🐂</div>
+        <div class="traveling-msg">The wagons roll westward... ${state.loadingMsg}</div>
+      </div>
+    </div>`);
+    return;
+  }
+
+  if(state.showOutcome && state.lastOutcome){
+    renderTrailOutcome();
+    return;
+  }
+
+  if(state.currentEvent){
+    renderTrailEvent();
+    return;
+  }
+
+  // Show trail map & travel option
+  const stop = TRAIL_STOPS[Math.min(state.trailProgress, TRAIL_STOPS.length-1)];
+  const pct = (state.trailProgress / (TRAIL_STOPS.length-1)) * 100;
+  const wagon_x = 30 + pct * 0.55; // 30% to 85% of SVG width
+
+  const stopsHTML = TRAIL_STOPS.map((s,i) => {
+    const x = 30 + (i/(TRAIL_STOPS.length-1))*55;
+    const reached = i <= state.trailProgress;
+    const current = i === state.trailProgress;
+    return `<g>
+      <circle cx="${x}%" cy="60%" r="${current?8:5}" fill="${reached?'#c9a820':'#333'}" stroke="${current?'#fff':'#555'}" stroke-width="${current?2:1}"/>
+      ${current || i===0 || i===TRAIL_STOPS.length-1 ?
+        `<text x="${x}%" y="80%" text-anchor="middle" fill="#999" font-size="9" font-family="Georgia">${s.name.split(',')[0]}</text>` : ''}
+    </g>`;
+  }).join('');
+
+  app(`${statsBarHTML()}
+    <div class="trail-screen">
+      <div class="trail-header">🛤️ The Oregon Trail</div>
+      <div class="trail-subheader">Your current position: <em>${stop.name}</em></div>
+      <div class="trail-map">
+        <svg class="trail-svg" viewBox="0 0 800 130" style="background:rgba(255,255,255,0.03);border:1px solid rgba(196,154,32,0.2);border-radius:2px">
+          <!-- Trail line -->
+          <line x1="30%" y1="60%" x2="85%" y2="60%" stroke="#5a4010" stroke-width="4" stroke-dasharray="8,4"/>
+          <line x1="30%" y1="60%" x2="${30 + pct*0.55}%" y2="60%" stroke="#c9a820" stroke-width="3"/>
+          <!-- Wagon -->
+          <text x="${wagon_x}%" y="55%" text-anchor="middle" font-size="22" style="animation:none">🛖</text>
+          ${stopsHTML}
+          <!-- Labels -->
+          <text x="30%" y="20%" text-anchor="middle" fill="#c9a820" font-size="11" font-family="'IM Fell English SC'">INDEPENDENCE, MO</text>
+          <text x="85%" y="20%" text-anchor="middle" fill="#c9a820" font-size="11" font-family="'IM Fell English SC'">OREGON CITY</text>
+        </svg>
+      </div>
+      <div class="trail-info-bar">
+        <div class="trail-info-item">
+          <div class="trail-info-label">Mile Marker</div>
+          <div class="trail-info-val">${stop.mile}</div>
+        </div>
+        <div class="trail-info-item">
+          <div class="trail-info-label">Legs Remaining</div>
+          <div class="trail-info-val">${TRAIL_STOPS.length - 1 - state.trailProgress}</div>
+        </div>
+        <div class="trail-info-item">
+          <div class="trail-info-label">Year</div>
+          <div class="trail-info-val">${state.year}</div>
+        </div>
+      </div>
+      <div style="font-style:italic;color:var(--text-dim);margin-bottom:20px;text-align:center">"${stop.desc}"</div>
+      ${state.trailProgress < TRAIL_STOPS.length - 1 ?
+        `<button class="btn-primary" onclick="travelNextStop()">Travel to Next Stop →</button>` :
+        `<button class="btn-primary" onclick="finishTrail()">Arrive in the West! →</button>`
+      }
+    </div>`);
+}
+
+function renderTrailEvent(){
+  const ev = state.currentEvent;
+  const choicesHTML = ev.choices.map((c,i)=>`
+    <button class="choice-btn" onclick="makeTrailChoice(${i})">
+      <span class="choice-num">${['I','II','III','IV'][i]}.</span>${c.text}
+    </button>`).join('');
+
+  app(`${statsBarHTML()}
+    <div class="trail-screen">
+      <div style="max-width:660px;width:100%">
+        <div class="event-card fade-in">
+          <div class="event-paper-tear"></div>
+          <div class="event-header">
+            <div class="event-newspaper-name">Trail Journal · Oregon Trail</div>
+            <div class="event-year-loc"><span>${state.year}</span><span>Mile ${TRAIL_STOPS[state.trailProgress].mile}</span></div>
+            <div class="event-headline">${ev.headline}</div>
+          </div>
+          <div class="event-description">${ev.description}</div>
+          <div class="choices-list">${choicesHTML}</div>
+        </div>
+      </div>
+    </div>`);
+}
+
+function renderTrailOutcome(){
+  const effects = state.lastEffects || {};
+  const effectsHTML = Object.entries(effects).map(([k,v])=>effectChipHTML(k,v)).join('');
+  const isFinished = state.trailProgress >= TRAIL_STOPS.length - 1;
+
+  app(`${statsBarHTML()}
+    <div class="trail-screen">
+      <div class="outcome-card fade-in" style="max-width:600px">
+        <div style="font-size:2rem;margin-bottom:14px">🗺️</div>
+        <div class="outcome-result">${state.lastOutcome}</div>
+        <div class="outcome-effects">${effectsHTML}</div>
+        <button class="btn-primary" onclick="continueTrail()">
+          ${isFinished ? 'Arrive in the West! →' : 'Continue Down the Trail →'}
+        </button>
+      </div>
+    </div>`);
+}
+
+function renderGameOver(){
+  app(`<div class="end-screen" style="background:radial-gradient(ellipse at center,#1a0505 0%,#0a0705 100%)">
+    <div class="fade-in" style="text-align:center">
+      <div class="end-icon">💀</div>
+      <div class="end-title" style="color:#e84040">Your Journey Ends</div>
+      <div class="end-subtitle">The American road claims another traveler</div>
+      <div class="end-stats-grid">
+        <div class="end-stat-box"><div class="end-stat-name">Year</div><div class="end-stat-value">${state.year}</div></div>
+        <div class="end-stat-box"><div class="end-stat-name">Chapter</div><div class="end-stat-value">${state.chapterIndex+1}/5</div></div>
+        <div class="end-stat-box"><div class="end-stat-name">Reputation</div><div class="end-stat-value">${Math.round(state.stats.reputation)}</div></div>
+      </div>
+      <div class="end-epitaph">"${state.character.name} walked the hard roads of early America and was found wanting. History remembers the survivors — but history is made by all who try."</div>
+      <button class="btn-primary" onclick="startCreate()">Try Again →</button>
+    </div>
+  </div>`);
+}
+
+function renderVictory(){
+  const score = Math.round((state.stats.health + state.stats.money + state.stats.reputation + state.stats.morale) / 4);
+  const medals = score>75 ? '🏅🏅🏅 Legend' : score>50 ? '🏅🏅 Hero' : '🏅 Survivor';
+  const epitaph = score>75
+    ? `"${state.character.name} navigated the storms of early America with wisdom, courage, and unshakeable principle. Their name became a footnote in the great story of a nation finding itself."`
+    : score>50
+    ? `"${state.character.name} made hard choices in harder times. They were neither saint nor villain — just an American, doing their best on the long road from 1765 to 1865."`
+    : `"${state.character.name} survived. In a century of war, plague, and upheaval, that was enough. That was everything."`;
+
+  app(`<div class="end-screen" style="background:radial-gradient(ellipse at center,#1a1205 0%,#0a0705 100%)">
+    <div class="fade-in" style="text-align:center">
+      <div class="end-icon">🦅</div>
+      <div class="end-title" style="color:var(--gold-light)">The War Is Over</div>
+      <div class="end-subtitle">You have witnessed a century of American history</div>
+      <div style="margin-bottom:16px;font-family:'IM Fell English SC';font-size:1.1rem;color:var(--gold)">${medals}</div>
+      <div class="end-stats-grid">
+        <div class="end-stat-box"><div class="end-stat-name">Health</div><div class="end-stat-value">${Math.round(state.stats.health)}</div></div>
+        <div class="end-stat-box"><div class="end-stat-name">Wealth</div><div class="end-stat-value">${Math.round(state.stats.money)}</div></div>
+        <div class="end-stat-box"><div class="end-stat-name">Food</div><div class="end-stat-value">${Math.round(state.stats.food)}</div></div>
+        <div class="end-stat-box"><div class="end-stat-name">Reputation</div><div class="end-stat-value">${Math.round(state.stats.reputation)}</div></div>
+        <div class="end-stat-box"><div class="end-stat-name">Morale</div><div class="end-stat-value">${Math.round(state.stats.morale)}</div></div>
+        <div class="end-stat-box"><div class="end-stat-name">Score</div><div class="end-stat-value">${score}</div></div>
+      </div>
+      <div class="end-epitaph">${epitaph}</div>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="btn-primary" onclick="startCreate()">Play Again →</button>
+        <button class="btn-secondary" onclick="renderTitle()">Main Menu</button>
+      </div>
+    </div>
+  </div>`);
+}
+
+// ═══════════════════════════════════════════════
+//  GAME LOGIC
+// ═══════════════════════════════════════════════
+
+function startCreate(){
+  state.screen='create';
+  renderCreate();
+}
+
+function selectClass(id){
+  const cls = CHARACTER_CLASSES.find(c=>c.id===id);
+  state.character.classId = id;
+  state.character.className = cls.name;
+  state.character.icon = cls.icon;
+  state.character.ability = cls.ability;
+  state.stats = {...cls.stats};
+  renderCreate();
+}
+
+function startGame(){
+  const name = (document.getElementById('nameInput')?.value || state.character.name || '').trim();
+  if(!name){ alert('Please enter your name.'); return; }
+  if(!state.character.classId){ alert('Please choose your calling.'); return; }
+  state.character.name = name;
+  state.screen='chapter-transition';
+  state.chapterIndex=0;
+  state.eventsInChapter=0;
+  state.year = CHAPTERS[0].startYear;
+  state.history=[];
+  renderChapterTransition();
+}
+
+function beginChapter(){
+  const ch = CHAPTERS[state.chapterIndex];
+  state.eventsInChapter=0;
+  state.screen = ch.isTrail ? 'trail' : 'game';
+  state.currentEvent=null;
+  state.showOutcome=false;
+
+  if(ch.isTrail){
+    state.trailProgress=0;
+    state.trailEventIndex=0;
+    renderTrail();
+  } else {
+    fetchNextEvent();
+  }
+}
+
+function applyEffects(effects){
+  const cls = CHARACTER_CLASSES.find(c=>c.id===state.character.classId);
+  Object.entries(effects).forEach(([k,v])=>{
+    if(state.stats[k]===undefined) return;
+    // Apply special class bonuses
+    let bonus = v;
+    if(k==='food' && state.character.classId==='farmer' && v>0) bonus += 15;
+    if(k==='money' && state.character.classId==='merchant' && v>0) bonus += 20;
+    if(k==='health' && state.character.classId==='soldier' && v<0) bonus = Math.max(v, v+20);
+    if(k==='reputation' && state.character.classId==='journalist' && v>0) bonus += 25;
+    if(k==='morale' && state.character.classId==='immigrant' && v<0) bonus = Math.max(v, v+10);
+    state.stats[k] = Math.max(0, Math.min(100, state.stats[k] + bonus));
+  });
+  // Farmer food floor
+  if(state.character.classId==='farmer') state.stats.food = Math.max(15, state.stats.food);
+}
+
+function checkDeath(){
+  if(state.stats.health<=0){
+    state.alive=false;
+    state.screen='gameover';
+    renderGameOver();
+    return true;
+  }
+  if(state.stats.food<=0 && state.stats.morale<10){
+    state.stats.health -= 15;
+    if(state.stats.health<=0){
+      state.alive=false;
+      state.screen='gameover';
+      renderGameOver();
+      return true;
+    }
+  }
+  return false;
+}
+
+function makeChoice(i){
+  const choice = state.currentEvent.choices[i];
+  const effects = choice.effects || {};
+  applyEffects(effects);
+
+  const histEntry = `${state.year} — ${state.currentEvent.headline}: "${choice.text}"`;
+  state.history.push(histEntry);
+
+  state.lastOutcome = choice.outcome;
+  state.lastEffects = effects;
+  state.showOutcome = true;
+  state.eventsInChapter++;
+
+  // Advance year
+  const ch = CHAPTERS[state.chapterIndex];
+  const yearStep = Math.floor((ch.endYear - ch.startYear) / ch.eventsNeeded);
+  state.year = Math.min(ch.endYear, state.year + yearStep);
+
+  if(checkDeath()) return;
+  renderOutcome();
+}
+
+function continueAfterOutcome(){
+  state.showOutcome=false;
+  const ch = CHAPTERS[state.chapterIndex];
+
+  if(state.eventsInChapter >= ch.eventsNeeded){
+    // End of chapter
+    state.chapterIndex++;
+    if(state.chapterIndex >= CHAPTERS.length){
+      state.victory=true;
+      state.screen='victory';
+      renderVictory();
+    } else {
+      state.eventsInChapter=0;
+      state.year = CHAPTERS[state.chapterIndex].startYear;
+      state.screen='chapter-transition';
+      renderChapterTransition();
+    }
+  } else {
+    fetchNextEvent();
+  }
+}
+
+// ══ TRAIL LOGIC ══
+
+function travelNextStop(){
+  // Consume food while traveling
+  const foodCost = 8 + Math.floor(Math.random()*8);
+  state.stats.food = Math.max(0, state.stats.food - foodCost);
+  state.year += 1;
+
+  state.loading=true;
+  state.loadingMsg='The wagons creak westward...';
+  renderTrail();
+
+  setTimeout(()=>{
+    state.trailProgress++;
+    state.loading=false;
+
+    // Random chance of event (always on certain stops)
+    const alwaysEvent = [2,4,6,8];
+    const randomEvent = Math.random() > 0.4;
+
+    if(alwaysEvent.includes(state.trailProgress) || randomEvent){
+      fetchTrailEvent();
+    } else {
+      if(checkDeath()) return;
+      renderTrail();
+    }
+  }, 1200);
+}
+
+function fetchTrailEvent(){
+  state.loading=true;
+  state.loadingMsg='Something stirs on the trail...';
+  renderTrail();
+
+  // Use fallback + API
+  const stop = TRAIL_STOPS[state.trailProgress];
+  const fallback = TRAIL_FALLBACK_EVENTS[state.trailEventIndex % TRAIL_FALLBACK_EVENTS.length];
+  state.trailEventIndex++;
+
+  // Try API, fall back gracefully
+  const prompt = `You are the narrator for a historical game set on the Oregon Trail, approximately ${state.year}.
+The player is a ${state.character.className} named ${state.character.name} currently at ${stop.name} (mile ${stop.mile}).
+Stats: Health ${Math.round(state.stats.health)}, Money ${Math.round(state.stats.money)}, Food ${Math.round(state.stats.food)}, Reputation ${Math.round(state.stats.reputation)}, Morale ${Math.round(state.stats.morale)}.
+
+Generate a dramatic trail encounter. Return ONLY valid JSON (no markdown):
+{
+  "headline": "SHORT DRAMATIC TITLE IN 5-7 WORDS",
+  "description": "Two vivid sentences addressing the player as 'you'. Make it dramatic and historically accurate to 1840s trail life.",
+  "choices": [
+    {"text": "Action (under 10 words)", "outcome": "One sentence result.", "effects": {"health":0,"money":0,"food":0,"reputation":0,"morale":0}},
+    {"text": "Action (under 10 words)", "outcome": "One sentence result.", "effects": {"health":0,"money":0,"food":0,"reputation":0,"morale":0}},
+    {"text": "Action (under 10 words)", "outcome": "One sentence result.", "effects": {"health":0,"money":0,"food":0,"reputation":0,"morale":0}}
+  ]
+}
+Effects should be realistic and significant (range -30 to +30). Include food, health, money, morale impacts as appropriate.`;
+
+  callAPI(prompt, fallback).then(ev=>{
+    state.currentEvent = ev;
+    state.loading=false;
+    renderTrail();
+  });
+}
+
+function makeTrailChoice(i){
+  const choice = state.currentEvent.choices[i];
+  const effects = choice.effects || {};
+  applyEffects(effects);
+
+  state.history.push(`${state.year} — Trail: ${state.currentEvent.headline}: "${choice.text}"`);
+  state.lastOutcome = choice.outcome;
+  state.lastEffects = effects;
+  state.showOutcome = true;
+  state.currentEvent = null;
+
+  if(checkDeath()) return;
+  renderTrail();
+}
+
+function continueTrail(){
+  state.showOutcome=false;
+  if(state.trailProgress >= TRAIL_STOPS.length-1){
+    finishTrail();
+  } else {
+    renderTrail();
+  }
+}
+
+function finishTrail(){
+  // Add bonus for completing trail
+  state.stats.reputation = Math.min(100, state.stats.reputation + 15);
+  state.stats.morale = Math.min(100, state.stats.morale + 10);
+  state.history.push(`${state.year} — Arrived at Oregon City! The overland journey complete.`);
+
+  // Move to next chapter
+  state.chapterIndex++;
+  state.eventsInChapter=0;
+  state.year = CHAPTERS[state.chapterIndex]?.startYear || state.year;
+  state.screen='chapter-transition';
+  renderChapterTransition();
+}
+
+// ══ API CALL ══
+
+async function callAPI(prompt, fallback){
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        model:"claude-sonnet-4-20250514",
+        max_tokens:1000,
+        messages:[{role:"user",content:prompt}]
+      })
+    });
+    if(!res.ok) throw new Error('API error');
+    const data = await res.json();
+    const text = data.content[0]?.text || '';
+    const cleaned = text.replace(/```json\n?|\n?```/g,'').trim();
+    // Find JSON in response
+    const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
+    if(!jsonMatch) throw new Error('No JSON found');
+    return JSON.parse(jsonMatch[0]);
+  } catch(e){
+    console.warn('Using fallback event:', e.message);
+    return fallback;
+  }
+}
+
+async function fetchNextEvent(){
+  state.loading=true;
+  state.loadingMsg='The quill scratches across parchment...';
+  renderGame();
+
+  const ch = CHAPTERS[state.chapterIndex];
+  const fallbacks = FALLBACK_EVENTS[ch.theme] || FALLBACK_EVENTS.colonial;
+  const fallback = fallbacks[state.eventsInChapter % fallbacks.length];
+
+  const approxYear = ch.startYear + Math.floor((ch.endYear - ch.startYear) * (state.eventsInChapter / ch.eventsNeeded));
+
+  const prompt = `You are the narrator for "American Odyssey," a historical game spanning 1765–1865.
+
+CHAPTER: ${ch.name} (${ch.subtitle})
+PLAYER: ${state.character.name}, a ${state.character.className}
+YEAR: approximately ${approxYear}
+STATS: Health ${Math.round(state.stats.health)}/100 · Wealth ${Math.round(state.stats.money)}/100 · Food ${Math.round(state.stats.food)}/100 · Reputation ${Math.round(state.stats.reputation)}/100 · Morale ${Math.round(state.stats.morale)}/100
+SPECIAL ABILITY: ${state.character.ability}
+
+Generate ONE historically-accurate dramatic event for this chapter. Return ONLY valid JSON (no markdown):
+{
+  "year": ${approxYear},
+  "headline": "DRAMATIC NEWSPAPER HEADLINE IN 6-8 WORDS",
+  "location": "City, Colony/State",
+  "description": "Two gripping sentences describing what happens to the player. Use 'you' and be specific and vivid. Make it feel urgent and personal.",
+  "choices": [
+    {"text": "Choice action (under 12 words)", "outcome": "One sentence describing the outcome of this choice.", "effects": {"health":0,"money":0,"food":0,"reputation":0,"morale":0}},
+    {"text": "Choice action (under 12 words)", "outcome": "One sentence describing the outcome of this choice.", "effects": {"health":0,"money":0,"food":0,"reputation":0,"morale":0}},
+    {"text": "Choice action (under 12 words)", "outcome": "One sentence describing the outcome of this choice.", "effects": {"health":0,"money":0,"food":0,"reputation":0,"morale":0}},
+    {"text": "Choice action (under 12 words)", "outcome": "One sentence describing the outcome of this choice.", "effects": {"health":0,"money":0,"food":0,"reputation":0,"morale":0}}
+  ]
+}
+
+Make each choice meaningfully different with real trade-offs. Effects range from -35 to +35. Be historically grounded to ${ch.name} era. The player is a ${state.character.className} — choices should reflect their role.`;
+
+  const event = await callAPI(prompt, fallback);
+  state.currentEvent = event;
+  state.loading=false;
+  renderGame();
+}
+
+// ══ RENDER ROUTER ══
+
+function render(){
+  switch(state.screen){
+    case 'title': renderTitle(); break;
+    case 'create': renderCreate(); break;
+    case 'chapter-transition': renderChapterTransition(); break;
+    case 'game': renderGame(); break;
+    case 'trail': renderTrail(); break;
+    case 'gameover': renderGameOver(); break;
+    case 'victory': renderVictory(); break;
+  }
+}
+
+// ── Init ──
+render();
+</script>
+</body>
+</html>
